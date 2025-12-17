@@ -1,0 +1,5 @@
+{
+  "name": "ChicLens: Fashion Visual Analyst",
+  "description": "An AI-powered fashion analyst that breaks down outfits from photos and generates recreation prompts, focusing purely on style and clothing.",
+  "requestFramePermissions": []
+}
