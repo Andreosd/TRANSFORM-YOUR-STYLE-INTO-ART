@@ -4,6 +4,32 @@ import { analyzeFashion, generateRecreationImage } from './services/geminiServic
 import { OutfitAnalysis, AppState } from './types';
 import { CameraIcon, UploadIcon, LoaderIcon, CheckCircleIcon, AlertCircleIcon, DownloadIcon } from './components/Icons';
 
+const BRANDS = [
+  'Nike', 'Essentials', 'Fear of God', 'Adidas', 'Puma', 'Zara', 'H&M', 'Uniqlo',
+  'Gucci', 'Prada', 'Louis Vuitton', 'Dior', 'Balenciaga', 'Jordan', 'Converse', 
+  'Vans', 'New Balance', 'Asics', 'Reebok', 'The North Face', 'Champion',
+  'Levi\'s', 'Calvin Klein', 'Tommy Hilfiger', 'Ralph Lauren', 'Lacoste', 'Stussy',
+  'Supreme', 'Off-White', 'Palm Angels', 'Vetements', 'Chrome Hearts'
+];
+
+const highlightBrands = (text: string) => {
+  if (!text) return text;
+  const regex = new RegExp(`(${BRANDS.join('|')})`, 'gi');
+  const parts = text.split(regex);
+  
+  return parts.map((part, i) => {
+    const isBrand = BRANDS.some(brand => brand.toLowerCase() === part.toLowerCase());
+    if (isBrand) {
+      return (
+        <span key={i} className="text-black font-black underline decoration-neutral-300 underline-offset-2">
+          {part}
+        </span>
+      );
+    }
+    return part;
+  });
+};
+
 const SectionHeader = ({ title }: { title: string }) => (
   <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-neutral-300 border-b border-neutral-100 pb-3 mb-6">{title}</h4>
 );
@@ -11,7 +37,9 @@ const SectionHeader = ({ title }: { title: string }) => (
 const DetailRow = ({ label, value }: { label: string; value: string }) => (
   <div className="flex justify-between items-start gap-4 border-b border-neutral-50 py-4 last:border-0">
     <span className="text-[9px] font-black uppercase text-neutral-400 tracking-widest pt-1">{label}</span>
-    <span className="text-xs font-bold text-neutral-900 text-right leading-snug flex-1">{value}</span>
+    <span className="text-xs font-bold text-neutral-700 text-right leading-snug flex-1">
+      {highlightBrands(value)}
+    </span>
   </div>
 );
 
